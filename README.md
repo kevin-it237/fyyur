@@ -179,3 +179,7 @@ python3 app.py
 6. **Verify on the Browser**<br>
 Navigate to project homepage [http://127.0.0.1:5000/](http://127.0.0.1:5000/) or [http://localhost:5000](http://localhost:5000) 
 
+# Update the 'Assigning employee to a service' 
+# Previously we was only able to assign an employee to a service when a service was alreasy created, now we can assign employees while create a service, I update the ui
+# Update the integration of the appointment booking
+# I'm going to appointment listing
