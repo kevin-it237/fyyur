@@ -29,6 +29,8 @@
 		<p>
 			<i class="fab fa-facebook-f"></i> {% if venue.facebook_link %}<a href="{{ venue.facebook_link }}" target="_blank">{{ venue.facebook_link }}</a>{% else %}No Facebook Link{% endif %}
 		</p>
+		<a class="btn btn-info" href="/venues/{{ venue.id }}/edit">Edit</a>
+		<button class="btn btn-danger" onclick="deleteVenue('{{ venue.id }}')">Delete</button>
 		{% if venue.seeking_talent %}
 		<div class="seeking">
 			<p class="lead">Currently seeking talent</p>
@@ -74,6 +76,23 @@
 		{% endfor %}
 	</div>
 </section>
+
+<script>
+	function deleteVenue(venueId) {
+		fetch('/venues/'+ venueId, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(res => res.json())
+		.then(res => {
+			console.log(res)
+			window.location = '/'
+		})
+		.catch(err => alert(err))
+	}
+</script>
 
 {% endblock %}
 
