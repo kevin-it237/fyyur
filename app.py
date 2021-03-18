@@ -115,22 +115,21 @@ def venues():
   #       num_shows should be aggregated based on number of upcoming shows per venue.
   venues = Venue.query.all()
   data = []
+  areas = ()
   for venue in venues:
     shows = venue.shows
-    
+    areas = areas + ((venue.city, venue.state),)
+  
+  unique_areas = set(areas)
+  for area in unique_areas:
     venue_area = {
-      "city": venue.city,
-      "state": venue.state,
+      "city": area[0],
+      "state": area[1],
       "venues": [
-        {"id": venue.id, "name": venue.name, "num_upcoming_shows": len([show for show in shows if show.start_time > datetime.now()])} for currentvenue in venues if venue.city == currentvenue.city
+        {"id": venue.id, "name": venue.name, "num_upcoming_shows": len([show for show in venue.shows if show.start_time > datetime.now()])} for venue in venues if venue.city == area[0]
       ]
     }
-    if len(data) == 0:
-      data.append(venue_area)
-    else:
-      for item in data:
-        if item['city'] != venue_area['city']:
-          data.append(venue_area)
+    data.append(venue_area)
   return render_template('pages/venues.html', areas=data);
 
 @app.route('/venues/search', methods=['POST'])
